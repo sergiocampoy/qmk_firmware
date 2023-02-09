@@ -16,6 +16,12 @@
 
 #include QMK_KEYBOARD_H
 
+// Override QMK variables
+#ifdef TAPPING_TERM
+#undef TAPPING_TERM
+#endif
+#define TAPPING_TERM 200
+
 // clang-format off
 enum layers {
     MAC_BASE,
@@ -27,30 +33,34 @@ enum layers {
 };
 // clang-format on
 
-#define KC_TASK LGUI(KC_TAB)
-#define KC_FLXP LGUI(KC_E)
+// #define KC_TASK LGUI(KC_TAB)
+// #define KC_FLXP LGUI(KC_E)
 
 /* Custom arrow + modifier combos */
 // clang-format off
 #define S_U_SFT MT(MOD_RSFT, KC_UP)
 #define S_L_FN  LT(_FN2    , KC_LEFT)
-#define S_D_FN1 LT(_FN2    , KC_DOWN)
+#define S_D_FN1 LT(_FN3    , KC_DOWN)
 #define S_R_CTL RCTL_T(KC_RIGHT)
 // clang-format on
 
+/* Layer switching */
+#define S_QWERT DF(WIN_BASE)
+#define S_COLEM DF(_COLEMAK_DH)
+
 /*
- * Home row mods (MOD TAP)
+ * Home row mods
  * ASDF JKL;
  */
-#define S_A_MOD MT(, KC_A)
-#define S_S_MOD MT(, KC_S)
-#define S_D_MOD MT(, KC_D)
-#define S_F_MOD MT(, KC_F)
+// #define S_A_MOD MT(, KC_A)
+// #define S_S_MOD MT(, KC_S)
+// #define S_D_MOD MT(, KC_D)
+// #define S_F_MOD MT(, KC_F)
 
-#define S_J_MOD MT(, KC_J)
-#define S_K_MOD MT(, KC_K)
-#define S_L_MOD MT(, KC_L)
-#define S_C_MOD MT(, KC_SCLN)
+// #define S_J_MOD MT(, KC_J)
+// #define S_K_MOD MT(, KC_K)
+// #define S_L_MOD MT(, KC_L)
+// #define S_C_MOD MT(, KC_SCLN)
 
 
 // clang-format off
@@ -81,6 +91,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_LSFT, KC_Z   , KC_X   , KC_C   , KC_V   , KC_B   , KC_N   , KC_M   , KC_COMM, KC_DOT , KC_SLSH,                   S_U_SFT,
         KC_LCTL, KC_LGUI, KC_LALT,                            KC_SPC                            , KC_RALT, S_L_FN , S_D_FN1, S_R_CTL),
 
+    // Colemak layer
+    [_COLEMAK_DH] = LAYOUT_ansi_61(
+        //     ,        ,        ,        ,        ,        ,        ,        ,        ,        ,        ,        ,        ,        ,
+        QK_GESC, KC_1   , KC_2   , KC_3   , KC_4   , KC_5   , KC_6   , KC_7   , KC_8   , KC_9   , KC_0   , KC_MINS, KC_EQL , KC_BSPC,
+        KC_TAB , KC_Q   , KC_W   , KC_F   , KC_P   , KC_B   , KC_J   , KC_L   , KC_U   , KC_Y   , KC_SCLN, KC_LBRC, KC_RBRC, KC_BSLS,
+        KC_LCTL, KC_A   , KC_R   , KC_S   , KC_T   , KC_G   , KC_M   , KC_N   , KC_E   , KC_I   , KC_O   , KC_QUOT,          KC_ENT ,
+        KC_LSFT, KC_Z   , KC_X   , KC_C   , KC_D   , KC_V   , KC_K   , KC_H   , KC_COMM, KC_DOT , KC_SLSH,                   S_U_SFT,
+        KC_LCTL, KC_LGUI, KC_LALT,                            KC_SPC                            , KC_RALT, S_L_FN , S_D_FN1, S_R_CTL),
+
     // MAC_BASE layer FN key (Currently unused)
     [_FN1] = LAYOUT_ansi_61(
         //     ,        ,        ,        ,        ,        ,        ,        ,        ,        ,        ,        ,        ,        ,
@@ -93,7 +112,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // WIN_BASE layer FN key
     [_FN2] = LAYOUT_ansi_61(
         //     ,        ,        ,        ,        ,        ,        ,        ,        ,        ,        ,        ,        ,        ,
-        KC_GRV , KC_BRID, KC_BRIU, KC_TASK, KC_FLXP, RGB_VAD, RGB_VAI, KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE, KC_VOLD, KC_VOLU, RGB_MOD,
+        KC_GRV , KC_BRID, KC_BRIU, _______, _______, RGB_VAD, RGB_VAI, KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE, KC_VOLD, KC_VOLU, RGB_MOD,
         RGB_TOG, RGB_MOD, RGB_VAI, RGB_HUI, RGB_SAI, RGB_SPI, _______, _______, KC_APP , KC_SCRL, KC_INS , KC_HOME, KC_END , _______,
         _______,RGB_RMOD, RGB_VAD, RGB_HUD, RGB_SAD, RGB_SPD, _______, _______, KC_UP  , KC_PSCR, KC_PGDN, KC_PGUP,          _______,
         _______, _______, _______, _______, _______, _______, NK_TOGG, KC_LEFT, KC_DOWN,KC_RIGHT, KC_DEL ,                   _______,
@@ -105,7 +124,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TILD, KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5  , KC_F6  , KC_F7  , KC_F8  , KC_F9  , KC_F10 , KC_F11 , KC_F12 , _______,
         RGB_TOG, RGB_MOD, RGB_VAI, RGB_HUI, RGB_SAI, RGB_SPI, _______, _______, _______, _______, _______, _______, _______, _______,
         _______,RGB_RMOD, RGB_VAD, RGB_HUD, RGB_SAD, RGB_SPD, _______, _______, _______, _______, _______, _______,          _______,
-        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,                   _______,
+        _______, _______, _______, _______, _______, _______, _______, _______, S_QWERT, S_COLEM, _______,                   _______,
         _______, _______, _______,                            _______                           , _______, _______, _______, _______),
 };
 // clang-format on
