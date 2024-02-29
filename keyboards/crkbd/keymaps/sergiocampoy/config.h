@@ -53,3 +53,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define KC_QWER DF(_QWERTY)
 #define KC_COLE DF(_COLEMAK_DH)
 #define KC_SPLT LALT_T(KC_SPC)
+#define KC_LOL DF(_LOL)
