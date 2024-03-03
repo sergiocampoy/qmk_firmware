@@ -22,63 +22,95 @@ enum layers {
     _QWERTY = 0,
     _COLEMAK_DH,
     _LOL,
+    _FACTORIO,
     _LEFT,
     _RIGHT,
     _SWITCH
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    [_QWERTY] = LAYOUT_split_3x6_3(
-  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-       KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,  KC_BSPC,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LCTL,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, KC_QUOT,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LSFT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,  KC_ESC,
-  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_LGUI,MO(_LEFT),KC_SPLT,   KC_ENT,LT(_RIGHT, KC_BSPC),KC_RALT
-                                      //`--------------------------'  `--------------------------'
-
-  ),
-
 /* Colemak Mod-DH layer
  * ,-----------------------------------.   ,-----------------------------------.
- * | tab |  q  |  w  |  f  |  p  |  b  |   |  j  |  l  |  u  |  y  |  ñ  | del |
+ * | tab |  q  |  w  |  e  |  r  |  t  |   |  y  |  u  |  i  |  o  |  p  | del |
  * |-----+-----+-----+-----+-----+-----|   |-----+-----+-----+-----+-----+-----|
- * | ctl |  a  |  r  |  s  |  t  |  g  |   |  m  |  n  |  e  |  i  |  o  |  ´  |
+ * | ctl |  a  |  s  |  d  |  f  |  g  |   |  h  |  j  |  k  |  l  |  ;  |  '  |
  * |-----+-----+-----+-----+-----+-----|   |-----+-----+-----+-----+-----+-----|
- * | sft |  z  |  x  |  c  |  d  |  v  |   |  k  |  h  |  ,  |  .  |  -  | esc |
+ * | sft |  z  |  x  |  c  |  v  |  b  |   |  n  |  m  |  ,  |  .  |  /  | esc |
  * `-----------------+-----+-----+-----|   |-----+-----+-----+-----------------'
  *                   | gui | fn1 | spc |   | ent | fn2 | alt |
  *                   `-----+-----+-----'   `-----+-----+-----'
+ * Features:
+ * Home Row Mods (GUI/ALT/CTL/SFT)
+ * Space / Alt
+ * Backspace / fn2
+ */
+[_QWERTY] = LAYOUT_split_3x6_3(
+ KC_TAB,         KC_Q,         KC_W,         KC_E,         KC_R, KC_T, /**/ KC_Y,         KC_U,         KC_I,         KC_O,            KC_P, KC_BSPC,
+KC_LCTL, LGUI_T(KC_A), LALT_T(KC_S), LCTL_T(KC_D), LSFT_T(KC_F), KC_G, /**/ KC_H, RSFT_T(KC_J), RCTL_T(KC_K), LALT_T(KC_L), RGUI_T(KC_SCLN), KC_QUOT,
+KC_LSFT,         KC_Z,         KC_X,         KC_C,         KC_V, KC_B, /**/ KC_N,         KC_M,      KC_COMM,       KC_DOT,         KC_SLSH,  KC_ESC,
+
+                                          KC_LGUI, MO(_LEFT), KC_SPLT, /**/ KC_ENT, LT(_RIGHT, KC_BSPC), KC_RALT
+),
+
+/* Colemak Mod-DH layer
+ * ,-----------------------------------.   ,-----------------------------------.
+ * | tab |  q  |  w  |  f  |  p  |  b  |   |  j  |  l  |  u  |  y  |  ;  | del |
+ * |-----+-----+-----+-----+-----+-----|   |-----+-----+-----+-----+-----+-----|
+ * | ctl |  a  |  r  |  s  |  t  |  g  |   |  m  |  n  |  e  |  i  |  o  |  '  |
+ * |-----+-----+-----+-----+-----+-----|   |-----+-----+-----+-----+-----+-----|
+ * | sft |  z  |  x  |  c  |  d  |  v  |   |  k  |  h  |  ,  |  .  |  /  | esc |
+ * `-----------------+-----+-----+-----|   |-----+-----+-----+-----------------'
+ *                   | gui | fn1 | spc |   | ent | fn2 | alt |
+ *                   `-----+-----+-----'   `-----+-----+-----'
+ * Features:
+ * Home Row Mods (GUI/ALT/CTL/SFT)
+ * Space / Alt
+ * Backspace / fn2
  */
 [_COLEMAK_DH] = LAYOUT_split_3x6_3(
-  KC_TAB,           KC_Q, KC_W, KC_F, KC_P, KC_B,   KC_J, KC_L, KC_U,    KC_Y,   KC_SCLN,  KC_BSPC,
-  KC_LCTL,          KC_A, KC_R, KC_S, KC_T, KC_G,   KC_M, KC_N, KC_E,    KC_I,   KC_O,     KC_QUOT,
-  KC_LSFT,          KC_Z, KC_X, KC_C, KC_D, KC_V,   KC_K, KC_H, KC_COMM, KC_DOT, KC_SLASH, KC_ESC,
+ KC_TAB,         KC_Q,         KC_W,         KC_F,         KC_P, KC_B, /**/ KC_J,         KC_L,         KC_U,         KC_Y,      KC_SCLN, KC_BSPC,
+KC_LCTL, LGUI_T(KC_A), LALT_T(KC_R), LCTL_T(KC_S), LSFT_T(KC_T), KC_G, /**/ KC_M, RSFT_T(KC_N), RCTL_T(KC_E), LALT_T(KC_I), RGUI_T(KC_O), KC_QUOT,
+KC_LSFT,         KC_Z,         KC_X,         KC_C,         KC_D, KC_V, /**/ KC_K,         KC_H,      KC_COMM,       KC_DOT,     KC_SLASH,  KC_ESC,
 
-  KC_LGUI, MO(_LEFT), KC_SPLT,
-  KC_ENT, MO(_RIGHT), KC_RALT
+                                          KC_LGUI, MO(_LEFT), KC_SPLT, /**/ KC_ENT, MO(_RIGHT), KC_RALT
 ),
 
 /* League of Legends layer
  * ,-----------------------------------.   ,-----------------------------------.
  * |  c  |  1  |  2  |  3  |  4  |  5  |   |  y  |  u  |  i  |  o  |  p  | del |
  * |-----+-----+-----+-----+-----+-----|   |-----+-----+-----+-----+-----+-----|
- * | tab |  q  |  w  |  e  |  r  |  t  |   |  h  |  j  |  k  |  l  |  ñ  |  ´  |
+ * | tab |  q  |  w  |  e  |  r  |  t  |   |  h  |  j  |  k  |  l  |  ;  |  '  |
  * |-----+-----+-----+-----+-----+-----|   |-----+-----+-----+-----+-----+-----|
- * | sft |  a  |  s  |  d  |  f  |  g  |   |  n  |  m  |  ,  |  .  |  -  | esc |
+ * | sft |  a  |  s  |  d  |  f  |  g  |   |  n  |  m  |  ,  |  .  |  /  | esc |
  * `-----------------+-----+-----+-----|   |-----+-----+-----+-----------------'
  *                   | ctl | fn1 | spc |   | ent | fn2 | alt |
  *                   `-----+-----+-----'   `-----+-----+-----'
  */
 [_LOL] = LAYOUT_split_3x6_3(
-  KC_C,    KC_1, KC_2, KC_3, KC_4, KC_5,   KC_Y, KC_U, KC_I,    KC_O,   KC_P,     KC_BSPC,
-  KC_TAB,  KC_Q, KC_W, KC_E, KC_R, KC_T,   KC_H, KC_J, KC_K,    KC_L,   KC_SCLN,  KC_QUOT,
-  KC_LSFT, KC_A, KC_S, KC_D, KC_F, KC_G,   KC_N, KC_M, KC_COMM, KC_DOT, KC_SLASH, KC_ESC,
+   KC_C, KC_1, KC_2, KC_3, KC_4, KC_5, /**/ KC_Y, KC_U,    KC_I,   KC_O,     KC_P, KC_BSPC,
+ KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, /**/ KC_H, KC_J,    KC_K,   KC_L,  KC_SCLN, KC_QUOT,
+KC_LSFT, KC_A, KC_S, KC_D, KC_F, KC_G, /**/ KC_N, KC_M, KC_COMM, KC_DOT, KC_SLASH,  KC_ESC,
 
-  KC_LCTL, MO(_LEFT), KC_SPC,
-  KC_ENT,  MO(_RIGHT), KC_RALT
+           KC_LCTL, MO(_LEFT), KC_SPC, /**/ KC_ENT,  MO(_RIGHT), KC_RALT
+),
+
+/* Factorio layer
+ * ,-----------------------------------.   ,-----------------------------------.
+ * | tab |  q  |  w  |  e  |  r  |  t  |   |  y  |  u  |  i  |  o  |  p  | del |
+ * |-----+-----+-----+-----+-----+-----|   |-----+-----+-----+-----+-----+-----|
+ * | ctl |  a  |  s  |  d  |  f  |  g  |   |  h  |  j  |  k  |  l  |  ñ  |  ´  |
+ * |-----+-----+-----+-----+-----+-----|   |-----+-----+-----+-----+-----+-----|
+ * | sft |  z  |  x  |  c  |  v  |  b  |   |  n  |  m  |  ,  |  .  |  -  | esc |
+ * `-----------------+-----+-----+-----|   |-----+-----+-----+-----------------'
+ *                   | alt | fn1 | spa |   | ent | fn2 | alt |
+ *                   `-----+-----+-----'   `-----+-----+-----'
+ */
+[_FACTORIO] = LAYOUT_split_3x6_3(
+ KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, /**/ KC_Y, KC_U,    KC_I,   KC_O,     KC_P, KC_BSPC,
+KC_LCTL, KC_A, KC_S, KC_D, KC_F, KC_G, /**/ KC_H, KC_J,    KC_K,   KC_L,  KC_SCLN, KC_QUOT,
+KC_LSFT, KC_Z, KC_X, KC_C, KC_V, KC_B, /**/ KC_N, KC_M, KC_COMM, KC_DOT, KC_SLASH,  KC_ESC,
+
+           KC_LALT, MO(_LEFT), KC_SPC, /**/ KC_ENT,MO(_RIGHT), KC_RALT
 ),
 
     [_LEFT] = LAYOUT_split_3x6_3(
@@ -109,7 +141,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       XXXXXXX,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                        KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10,  KC_F11,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX, KC_QWER, KC_COLE,  KC_LOL, XXXXXXX, XXXXXXX,                      KC_HOME, KC_PGDN, KC_PGUP,  KC_END, XXXXXXX, XXXXXXX,
+      XXXXXXX, KC_QWER, KC_COLE,  KC_LOL, KC_FACT, XXXXXXX,                      KC_HOME, KC_PGDN, KC_PGUP,  KC_END, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, QK_BOOT,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
